@@ -6,4 +6,5 @@ dependencies = [
     "django-environ>=0.13.0",
     "djangorestframework>=3.17.1",
     "psycopg[binary]>=3.3.4",
+    "django-cors-headers>=4.7.0",
 ]

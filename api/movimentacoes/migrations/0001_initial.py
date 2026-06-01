@@ -2,6 +2,8 @@
 
 from django.db import migrations, models
 
+import django.db.models.deletion
+
 
 class Migration(migrations.Migration):
 
@@ -16,10 +18,15 @@ class Migration(migrations.Migration):
             name='Movimentacao',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('quantidade', models.IntegerField()),
+                ('quantidade', models.PositiveIntegerField()),
                 ('tipo', models.IntegerField(choices=[(1, 'Entrada'), (-1, 'Saída')])),
                 ('data', models.DateTimeField(auto_now_add=True)),
-                ('produto', models.ManyToManyField(to='produtos.produto')),
+                ('observacao', models.TextField(blank=True, default='')),
+                ('produto', models.ForeignKey(
+                    on_delete=django.db.models.deletion.PROTECT,
+                    related_name='movimentacoes',
+                    to='produtos.produto',
+                )),
             ],
         ),
     ]
