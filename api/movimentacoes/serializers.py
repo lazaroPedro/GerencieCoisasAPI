@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from movimentacoes.models import Movimentacao
+from django.db import transaction
 
 from movimentacoes.models import Movimentacao
 from produtos.models import Produto
