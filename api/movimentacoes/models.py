@@ -14,6 +14,8 @@ class Movimentacao(models.Model):
     tipo = models.IntegerField(choices=TIPO_CHOICES)
     data = models.DateTimeField(auto_now_add=True)
     observacao = models.TextField(blank=True, default='')
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+
 
     def __str__(self):
         tipo_label = 'Entrada' if self.tipo == self.ENTRADA else 'Saída'

@@ -7,6 +7,7 @@ class Produto(models.Model):
     fornecedor = models.CharField(max_length=255)
     quantidade = models.IntegerField()
     categoria = models.ForeignKey('categorias.Categoria', on_delete=models.CASCADE)
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome

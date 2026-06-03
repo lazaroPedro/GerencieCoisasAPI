@@ -17,7 +17,7 @@ class MovimentacaoViewSet(ModelViewSet):
     permission_classes = [AllowAny]
 
     def get_queryset(self):
-        qs = Movimentacao.objects.select_related('produto').order_by('-data')
+        qs = Movimentacao.objects.select_related('produto').filter(user=self.request.user).order_by('-data')
 
         produto_id = self.request.query_params.get('produto')
         if produto_id:
@@ -28,16 +28,19 @@ class MovimentacaoViewSet(ModelViewSet):
             qs = qs.filter(tipo=int(tipo))
 
         return qs
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
     @action(detail=False, methods=['get'], url_path='resumo')
     def resumo(self, request):
         """GET /api/movimentacoes/resumo/ — totais de entradas e saídas."""
         entradas = (
-            Movimentacao.objects.filter(tipo=Movimentacao.ENTRADA)
+            Movimentacao.objects.filter(tipo=Movimentacao.ENTRADA, user=self.request.user)
             .aggregate(total=Sum('quantidade'))['total'] or 0
         )
         saidas = (
-            Movimentacao.objects.filter(tipo=Movimentacao.SAIDA)
+            Movimentacao.objects.filter(tipo=Movimentacao.SAIDA, user=self.request.user)
             .aggregate(total=Sum('quantidade'))['total'] or 0
         )
         return Response({'entradas': entradas, 'saidas': saidas})
