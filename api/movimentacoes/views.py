@@ -6,7 +6,7 @@ from .models import Movimentacao
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.db.models import Sum
-
+from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope
 
 class MovimentacaoViewSet(ModelViewSet):
     """
@@ -14,7 +14,7 @@ class MovimentacaoViewSet(ModelViewSet):
     Permissão: AllowAny temporário — será substituído por DOT (OAuth2) na etapa final.
     """
     serializer_class = MovimentacaoSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated, TokenHasReadWriteScope] 
 
     def get_queryset(self):
         qs = Movimentacao.objects.select_related('produto').filter(user=self.request.user).order_by('-data')

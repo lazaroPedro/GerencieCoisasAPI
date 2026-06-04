@@ -29,5 +29,6 @@ router.register('movimentacoes', MovimentacaoViewSet, basename='movimentacoes')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     path('api/', include(router.urls)),
 ]

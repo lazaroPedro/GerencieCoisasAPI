@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'oauth2_provider',    
     'produtos',
     'categorias',
     'movimentacoes',
@@ -121,3 +122,21 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+# ── Django REST Framework ──────────────────────────────────────────────────
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
+# ── OAuth2 Toolkit ─────────────────────────────────────────────────────────
+OAUTH2_PROVIDER = {
+    'SCOPES': {
+        'read': 'Acesso de leitura',
+        'write': 'Acesso de escrita',
+    },
+}
