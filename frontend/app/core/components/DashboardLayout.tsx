@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { 
   Boxes, LayoutDashboard, Box, Tags, Truck, 
   ArrowLeftRight, Menu, User, LogOut, IdCard 
@@ -12,6 +12,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [profileOpen, setProfileOpen] = useState(false);
   const pathname = usePathname() ?? '/';
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login');
+    }
+  }, [router]);
 
   const menuItems = [
     { name: 'Dashboard', href: '/', icon: LayoutDashboard },
