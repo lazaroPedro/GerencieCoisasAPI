@@ -37,7 +37,7 @@ Confira o vídeo demonstrativo com explicações e o funcionamento do sistema:
 - Django OAuth Toolkit (OAuth2)
 - PostgreSQL
 
-**Frontend (`/frontend`):**
+**Frontend (`/client`):**
 - Next.js (React)
 - TypeScript
 - Tailwind CSS
@@ -62,7 +62,7 @@ A forma mais simples de executar a aplicação em ambiente de desenvolvimento é
 ### 1. Clonar o Repositório e Preparar Variáveis
 ``` bash
 git clone https://github.com/lazaroPedro/GerencieCoisasAPI
-cd gerenciecoisasapi
+cd GerencieCoisasAPI
 ```
 
 ### Crie o arquivo de variáveis de ambiente:
