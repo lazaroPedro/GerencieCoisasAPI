@@ -38,10 +38,12 @@ export default function LoginPage() {
       const data = await res.json();
 
       localStorage.setItem('token', data.access_token);
+      localStorage.setItem('refresh_token', data.refresh_token);
+      localStorage.setItem('username', username);
 
-      router.push('/');
-    } catch (err: any) {
-      setErro(err.message || 'Erro ao tentar fazer login');
+      router.push('/produtos');
+    } catch (err: unknown) {
+      setErro((err as Error).message || 'Erro ao tentar fazer login');
     } finally {
       setCarregando(false);
     }
@@ -50,12 +52,13 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center text-orange-500">
+        <div className="flex flex-col items-center  justify-center text-orange-500">
           <Boxes className="h-12 w-12" />
+          <span className="text-3xl font-bold text-primary">Gerencie Coisas</span>
         </div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-slate-900">
+        <span className="mt-2 block text-center text-sm text-slate-600">
           Acesso ao Sistema
-        </h2>
+        </span>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -102,9 +105,16 @@ export default function LoginPage() {
                 {carregando ? 'Entrando...' : 'Entrar'}
               </button>
             </div>
+
           </form>
+          <div className="mt-6 text-center text-sm text-slate-500">
+            Não tem uma conta? <a href="#" className="font-medium text-orange-600 hover:text-orange-500">  
+              Cadastre-se
+            </a>
+          </div>
         </div>
       </div>
     </div>
   );
 }
+   

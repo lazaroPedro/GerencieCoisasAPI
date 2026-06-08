@@ -11,24 +11,33 @@ import {
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [username, setUsername] = useState('Usuário');
   const pathname = usePathname() ?? '/';
   const router = useRouter();
-
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
+    const storedUsername = localStorage.getItem('username');
+
     if (!token) {
       router.push('/login');
+    }
+    if (storedUsername) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setUsername(storedUsername);
     }
   }, [router]);
 
   const menuItems = [
-    { name: 'Dashboard', href: '/', icon: LayoutDashboard },
     { name: 'Produtos', href: '/produtos', icon: Box },
     { name: 'Categorias', href: '/categorias', icon: Tags }, 
-    { name: 'Fornecedores', href: '/fornecedores', icon: Truck },
     { name: 'Movimentações', href: '/movimentacoes', icon: ArrowLeftRight },
   ];
 
+  
+  if (pathname === '/login') {
+    return <>{children}</>;
+  }
   return (
     <div className="flex h-screen bg-bodyBg text-slate-800 font-sans overflow-hidden">
 
@@ -97,7 +106,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <div className="w-8.75 h-8.75 bg-slate-100 rounded-full flex items-center justify-center border border-slate-200">
                 <User className="h-4 w-4 text-slate-500" />
               </div>
-              <span className="text-sm font-bold text-slate-700 hidden md:inline">Administrador</span>
+              <span className="text-sm font-bold text-slate-700 hidden md:inline">Olá {username}</span>
             </button>
 
             {profileOpen && (
